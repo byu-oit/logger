@@ -1,0 +1,38 @@
+{
+  "name": "@byu-oit/byu-logger",
+  "version": "0.1.0",
+  "description": "Default configuration for pino logger",
+  "contributors": [
+    "Scott Hutchings <scott_hutchings@byu.edu>"
+  ],
+  "main": "dist/byu-logger.js",
+  "types": "dist/byu-logger.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "del dist && tsc",
+    "lint": "ts-standard | snazzy",
+    "lint:fix": "ts-standard --fix | snazzy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "pino": "^6.11.2",
+    "pino-http": "^5.5.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/pino": "^6.3.6",
+    "@types/pino-http": "^5.4.0",
+    "@types/uuid": "^8.3.0",
+    "lint-staged": "^10.5.4",
+    "snazzy": "^9.0.0",
+    "ts-standard": "^10.0.0",
+    "typescript": "^4.2.3"
+  },
+  "lint-staged": {
+    "*.ts": "npm run lint:fix"
+  }
+}
