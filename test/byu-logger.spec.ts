@@ -18,9 +18,9 @@ afterEach(() => {
   global.Date.now = realDateNow
 })
 
-function captureStdoutLogs() {
-  return (buffer: Uint8Array | string): boolean => {
-    logged = logged + buffer
+function captureStdoutLogs () {
+  return (buffer: string): boolean => {
+    logged = `${logged}${buffer}`
     return true
   }
 }
@@ -37,8 +37,8 @@ describe('In local env', () => {
     logger.debug('debug works')
 
     expect(logger.level).toEqual('debug')
-    expect(logged).toContain("DEBUG") // must contain the debug level
-    expect(logged).toContain("debug works") // must contain the message
+    expect(logged).toContain('DEBUG') // must contain the debug level
+    expect(logged).toContain('debug works') // must contain the message
   })
 
   test('default logger should still display info', () => {
@@ -47,8 +47,8 @@ describe('In local env', () => {
     const logger = DefaultLogger()
     logger.info('info works')
 
-    expect(logged).toContain("INFO") // must contain the info level
-    expect(logged).toContain("info works") // must contain the message
+    expect(logged).toContain('INFO') // must contain the info level
+    expect(logged).toContain('info works') // must contain the message
   })
 
   test('default logger displays logs with iso datetime format', () => {
@@ -119,4 +119,3 @@ describe('In production env', () => {
     expect(jsonLogEntry.time).toEqual(jan1st.getTime())
   })
 })
-
