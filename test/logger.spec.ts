@@ -1,4 +1,4 @@
-import DefaultLogger from '../src/byu-logger'
+import DefaultLogger from '../src/logger'
 
 const originalProcessEnv = process.env
 const originalStdOutWriter = process.stdout.write

@@ -1,6 +1,4 @@
 import Pino, { LevelWithSilent, Logger } from 'pino'
-import PinoHttp, { HttpLogger } from 'pino-http'
-import uuid from 'uuid'
 
 export interface Options {
   name?: string
@@ -31,23 +29,4 @@ export default function DefaultLogger (input?: Options): Logger {
       translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' // show timestamp instead of epoch time
     } : false
   })
-}
-
-export interface MiddlewareOptions {
-  logger: Logger
-}
-
-export function loggerMiddleware (input?: MiddlewareOptions): HttpLogger {
-  return PinoHttp({
-    logger: input?.logger ?? DefaultLogger(),
-    genReqId: req => {
-      return req.headers['x-amzn-trace-id'] ?? createId() // use the amazon trace id as the request id
-    }
-  })
-}
-
-function createId (): string {
-  const id = uuid.v4().replace(/-/g, '')
-  const shortId = id.substr(0, 12) + id.substr(13, 3) + id.substr(17)
-  return Buffer.from(shortId, 'hex').toString('base64')
 }
