@@ -12,9 +12,11 @@
   ],
   "scripts": {
     "build": "del dist && tsc",
+    "coverage": "npm run test -- --coverage || exit 0",
     "lint": "ts-standard | snazzy",
     "lint:fix": "ts-standard --fix | snazzy",
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "npm run build"
   },
   "author": "",
   "license": "Apache-2.0",
