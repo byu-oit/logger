@@ -16,6 +16,7 @@ export default function DefaultLogger (input?: Options): Logger {
   return Pino({
     name: input.name,
     level: input.level,
+    messageKey: 'message',
     formatters: {
       level: level => { return { level } } // display the level not the number value of the level
     },
@@ -27,7 +28,7 @@ export default function DefaultLogger (input?: Options): Logger {
     },
     prettyPrint: process.env.NODE_ENV !== 'production' ? {
       // if in local environment use pretty print logs
-      translateTime: true // in local show timestamp instead of epoch time
+      translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' // show timestamp instead of epoch time
     } : false
   })
 }
