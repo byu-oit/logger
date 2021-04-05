@@ -16,7 +16,7 @@ export default function DefaultLogger (input?: Options): Logger {
     level: input.level,
     messageKey: 'message',
     formatters: {
-      level: level => { return { level } } // display the level not the number value of the level
+      level: level => ({ level }) // display the level not the number value of the level
     },
     base: { }, // don't display the process pid, nor hostname
     redact: {

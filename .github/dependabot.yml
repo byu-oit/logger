@@ -6,7 +6,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "master" # Our dev pipeline runs off the dev branch, production runs off of master
+    target-branch: "main" # Our dev pipeline runs off the dev branch, production runs off of master
     # Requesting reviews from yourself makes Dependabot PRs easy to find (https://github.com/pulls/review-requested)
     reviewers:
       - "yoshutch"
@@ -16,7 +16,7 @@ updates:
     directory: "/" # For GitHub Actions, set the directory to / to check for workflow files in .github/workflows. (GitHub Docs)
     schedule:
       interval: "daily"
-    target-branch: "master" # Our dev pipeline runs off the dev branch, production runs off of master
+    target-branch: "main" # Our dev pipeline runs off the dev branch, production runs off of master
     # Requesting reviews from yourself makes Dependabot PRs easy to find (https://github.com/pulls/review-requested)
     reviewers:
       - "yoshutch"
