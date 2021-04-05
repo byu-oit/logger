@@ -18,7 +18,7 @@
     "test": "jest",
     "prepublishOnly": "npm run build"
   },
-  "author": "",
+  "author": "Brigham Young University - Office of Information Technology",
   "license": "Apache-2.0",
   "dependencies": {
     "pino": "^6.11.2"
@@ -33,6 +33,9 @@
     "ts-jest": "^26.5.4",
     "ts-standard": "^10.0.0",
     "typescript": "^4.2.3"
+  },
+  "engines": {
+    "node": ">=10"
   },
   "jest": {
     "transform": {

@@ -15,13 +15,16 @@ jobs:
   test:
     name: Test Module
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.node_version }}
+          node-version: ${{ matrix.node-version }}
 
       - name: npm install
         run: npm install
@@ -31,6 +34,7 @@ jobs:
           npm run coverage
 
       - name: Upload coverage to Codecov
+        if: ${{ matrix.node-version == env.node_version }} # only upload coverage from node 14
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
