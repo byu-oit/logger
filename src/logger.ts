@@ -1,6 +1,4 @@
 import Pino, { LevelWithSilent, Logger } from 'pino'
-import PinoHttp, { HttpLogger } from 'pino-http'
-import uuid from 'uuid'
 
 export interface Options {
   name?: string
@@ -16,8 +14,9 @@ export default function DefaultLogger (input?: Options): Logger {
   return Pino({
     name: input.name,
     level: input.level,
+    messageKey: 'message',
     formatters: {
-      level: level => { return { level } } // display the level not the number value of the level
+      level: level => ({ level }) // display the level not the number value of the level
     },
     base: { }, // don't display the process pid, nor hostname
     redact: {
@@ -27,26 +26,7 @@ export default function DefaultLogger (input?: Options): Logger {
     },
     prettyPrint: process.env.NODE_ENV !== 'production' ? {
       // if in local environment use pretty print logs
-      translateTime: true // in local show timestamp instead of epoch time
+      translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' // show timestamp instead of epoch time
     } : false
   })
-}
-
-export interface MiddlewareOptions {
-  logger: Logger
-}
-
-export function loggerMiddleware (input?: MiddlewareOptions): HttpLogger {
-  return PinoHttp({
-    logger: input?.logger ?? DefaultLogger(),
-    genReqId: req => {
-      return req.headers['x-amzn-trace-id'] ?? createId() // use the amazon trace id as the request id
-    }
-  })
-}
-
-function createId (): string {
-  const id = uuid.v4().replace(/-/g, '')
-  const shortId = id.substr(0, 12) + id.substr(13, 3) + id.substr(17)
-  return Buffer.from(shortId, 'hex').toString('base64')
 }
