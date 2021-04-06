@@ -1,6 +1,6 @@
 {
   "name": "@byu-oit/logger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Default configuration for pino logger",
   "contributors": [
     "Scott Hutchings <scott_hutchings@byu.edu>"
@@ -45,5 +45,12 @@
   },
   "lint-staged": {
     "*.ts": "npm run lint:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byu-oit/logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/byu-oit/logger/issues"
   }
 }
