@@ -114,6 +114,6 @@ jobs:
 
         # The prepublishOnly script builds the package before publishing
       - name: Publish
-        run: npm publish
+        run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets[matrix.registry.token] }}
