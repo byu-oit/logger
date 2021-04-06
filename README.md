@@ -11,9 +11,8 @@ npm i @byu-oit/logger
 ## Usage
 ```typescript
 import DefaultLogger from '@byu-oit/logger'
-import { Logger } from 'pino'
 
-const logger: Logger = DefaultLogger()
+const logger = DefaultLogger()
 
 logger.info('Hello World')
 ```
