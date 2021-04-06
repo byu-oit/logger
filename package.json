@@ -45,5 +45,12 @@
   },
   "lint-staged": {
     "*.ts": "npm run lint:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byu-oit/logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/byu-oit/logger/issues"
   }
 }
