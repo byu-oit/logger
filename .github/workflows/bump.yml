@@ -1,0 +1,42 @@
+name: Weekly Bump Dependencies
+on:
+  schedule:
+    - cron: '0 14 * * 1'
+  workflow_dispatch:
+env:
+  node_version: "14.x"
+
+jobs:
+  Bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version }}
+
+      - name: Bump dependencies
+        run: |
+          echo "Clean up existing dependencies"
+          rm -rf node_modules
+          rm package-jock.json
+          echo "Update dependencies
+          npm update
+
+
+
+      - name: Create (or update) pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_ACTIONS_TOKEN }} # Use non-default token so that this PR will trigger CI
+          title: 'chore(deps): bump dependencies'
+          commit-message: 'chore(deps): bump dependencies'
+          body: Created using the [Weekly Bump Dependenciesv](https://github.com/${{ github.repository }}/actions?query=workflow%3A%22Weekly+Bump+Dependencies%22) workflow
+          branch: bump-dependencies
+          labels: |
+            dependencies
+            javascript
+          reviewers: yoshutch
