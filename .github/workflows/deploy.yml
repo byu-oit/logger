@@ -2,7 +2,7 @@ name: Deployment
 
 on:
   push:
-    branches: [ignore] # TODO remove
+    branches: [main]
 
 env:
   node_version: "14.x"
