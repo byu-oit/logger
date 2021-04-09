@@ -97,5 +97,5 @@ jobs:
 
       - name: Link to Release
         run: |
-          echo "Release Draft create/updated: ${{ steps.draft.outputs.html_url }}"
+          echo "Release draft create/updated: ${{ steps.draft.outputs.html_url }}"
       # ENH: maybe look into adding a comment to the PR with a link to the release draft?
