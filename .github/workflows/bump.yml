@@ -18,17 +18,23 @@ jobs:
         with:
           node-version: ${{ env.node_version }}
 
+      - name: npm install
+        run: npm install
+
+      - name: Check outdated dependencies
+        id: outdated
+        run: npm outdated || echo ::set-output name=outdated::1
+
       - name: Bump dependencies
-        run: |
-          echo "Clean up existing dependencies"
-          rm -rf node_modules
-          rm package-jock.json
-          echo "Update dependencies
-          npm update
+        if: steps.outdated.outputs.outdated == 1
+        run: npm update
 
-
+      - name: Bump patch version
+        if: steps.outdated.outputs.outdated == 1
+        run: npm version patch -git-tag-version=false
 
       - name: Create (or update) pull request
+        if: steps.outdated.outputs.outdated == 1
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GH_ACTIONS_TOKEN }} # Use non-default token so that this PR will trigger CI
