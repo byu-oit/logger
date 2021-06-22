@@ -1,8 +1,8 @@
 # BYU Logger
 [![GitHub Release](https://img.shields.io/github/release/byu-oit/logger?style=flat)]()
-[![codecov](https://codecov.io/gh/byu-oit/logger/branch/main/graph/badge.svg?token=6kkkOs7yEe)](https://codecov.io/gh/byu-oit/express-logger)
+[![codecov](https://codecov.io/gh/byu-oit/logger/branch/main/graph/badge.svg?token=6kkkOs7yEe)](https://codecov.io/gh/byu-oit/logger)
 
-Creates a [`pino` logger](https://github.com/pinojs/pino) with default settings to match the [BYU Application Development logging standards](https://github.com/byu-oit/app-dev-best-practices/blob/main/adr/application/0006-basic-logging-standards.md).
+Creates a [`pino` logger](https://github.com/pinojs/pino) with default settings to match the [CES Application Development logging standards](https://github.com/byu-oit/ces-dev-best-practices/blob/main/adr/application/0006-basic-logging-standards.md).
 
 It will pretty-print logs when run locally, but it will write logs in JSON when deployed (when `NODE_ENV=production`).
 
