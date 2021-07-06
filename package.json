@@ -1,6 +1,6 @@
 {
   "name": "@byu-oit/logger",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Default configuration for pino logger",
   "contributors": [
     "Scott Hutchings <scott_hutchings@byu.edu>"
@@ -25,14 +25,14 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/node": "^14.17.4",
+    "@types/node": "^16.0.0",
     "@types/pino": "^6.3.8",
-    "jest": "^26.6.3",
-    "lint-staged": "^10.5.4",
-    "pino-pretty": "^4.8.0",
+    "jest": "^27.0.6",
+    "lint-staged": "^11.0.0",
+    "pino-pretty": "^5.1.0",
     "rimraf": "^3.0.2",
     "snazzy": "^9.0.0",
-    "ts-jest": "^26.5.6",
+    "ts-jest": "^27.0.3",
     "ts-standard": "^10.0.0",
     "typescript": "^4.3.5"
   },
