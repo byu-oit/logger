@@ -21,12 +21,12 @@
   "author": "Brigham Young University - Office of Information Technology",
   "license": "Apache-2.0",
   "dependencies": {
-    "pino": "^6.11.3"
+    "pino": "^6.12.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@types/node": "^16.0.0",
-    "@types/pino": "^6.3.8",
+    "@types/pino": "^6.3.9",
     "jest": "^27.0.6",
     "lint-staged": "^11.0.0",
     "pino-pretty": "^5.1.0",
