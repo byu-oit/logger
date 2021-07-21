@@ -119,3 +119,28 @@ describe('In production env', () => {
     expect(jsonLogEntry.time).toEqual(jan1st.getTime())
   })
 })
+
+describe('In test env', () => {
+  beforeEach(() => {
+    process.env.NODE_ENV = 'test'
+  })
+
+  test('default logger should default to silent level', () => {
+    process.stdout.write = captureStdoutLogs()
+
+    const logger = DefaultLogger()
+    logger.debug('debug does not work')
+
+    expect(logger.level).toEqual('silent')
+    expect(logged).toEqual('') // no logs should have happened
+  })
+
+  test('default logger should not display logs', () => {
+    process.stdout.write = captureStdoutLogs()
+
+    const logger = DefaultLogger()
+    logger.info('info works')
+
+    expect(logged).toEqual('')
+  })
+})
