@@ -3,7 +3,16 @@ import Pino, { LoggerOptions, Logger } from 'pino'
 export default function DefaultLogger (options?: LoggerOptions): Logger {
   const isDeployed = process.env.NODE_ENV === 'production'
   return Pino({
-    level: isDeployed ? 'info' : 'debug',
+    level: (() => {
+      switch (process.env.NODE_ENV) {
+        case 'production':
+          return 'info'
+        case 'test':
+          return 'silent'
+        default:
+          return 'debug'
+      }
+    })(),
     messageKey: 'message',
     formatters: {
       level: level => ({ level }) // display the level not the number value of the level
