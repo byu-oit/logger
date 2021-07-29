@@ -37,6 +37,7 @@
     "typescript": "^4.3.5"
   },
   "peerDependencies": {
+    "@types/pino": "^6.3.10",
     "pino-pretty": "^5.1.2"
   },
   "engines": {
