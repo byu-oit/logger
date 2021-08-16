@@ -1,6 +1,6 @@
 {
   "name": "@byu-oit/logger",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Default configuration for pino logger",
   "contributors": [
     "Scott Hutchings <scott_hutchings@byu.edu>"
@@ -24,7 +24,7 @@
     "pino": "^6.13.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.1",
     "@types/node": "^16.6.1",
     "@types/pino": "^6.3.11",
     "jest": "^27.0.6",
