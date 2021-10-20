@@ -21,7 +21,7 @@
   "author": "Brigham Young University - Office of Information Technology",
   "license": "Apache-2.0",
   "dependencies": {
-    "pino": "^6.13.2"
+    "pino": "^7.0.3"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",
