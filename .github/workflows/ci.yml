@@ -41,7 +41,7 @@ jobs:
         run: npm run coverage
 
       - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == env.node_version }} # just run coverage if not node 16
+        if: ${{ matrix.node-version == env.node_version }} # just run coverage if node 16
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
