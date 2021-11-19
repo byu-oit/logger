@@ -12,7 +12,7 @@ on:
       - .github/workflows/bump.yml
 
 env:
-  node_version: "14.x"
+  node_version: "16.x"
 
 jobs:
   test:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x, 16.x]
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
@@ -34,15 +34,14 @@ jobs:
         run: npm install
 
       - name: npm test
-        if: ${{ matrix.node-version != env.node_version }} # just run the tests if not node 14
         run: npm run test
 
       - name: npm test with coverage
-        if: ${{ matrix.node-version == env.node_version }} # only upload coverage from node 14
+        if: ${{ matrix.node-version == env.node_version }} # just run coverage if not node 16
         run: npm run coverage
 
       - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == env.node_version }} # only upload coverage from node 14
+        if: ${{ matrix.node-version == env.node_version }} # just run coverage if not node 16
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
