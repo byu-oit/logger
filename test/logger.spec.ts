@@ -1,11 +1,16 @@
 import DefaultLogger from '../src/logger'
 
-const originalProcessEnv = process.env
-const originalStdOutWriter = process.stdout.write
 const jan1st = new Date(2021, 0, 1)
 const dateNowStub = jest.fn(() => jan1st.getTime())
 const realDateNow = Date.now.bind(global.Date)
 let logged: string = ''
+
+beforeAll(() => {
+  process.stdout.write = (buffer: string) => {
+    logged += buffer
+    return true
+  }
+})
 
 beforeEach(() => {
   logged = ''
@@ -13,17 +18,8 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  process.env = originalProcessEnv
-  process.stdout.write = originalStdOutWriter
   global.Date.now = realDateNow
 })
-
-function captureStdoutLogs () {
-  return (buffer: string): boolean => {
-    logged = `${logged}${buffer}`
-    return true
-  }
-}
 
 describe('In local env', () => {
   beforeEach(() => {
@@ -31,8 +27,6 @@ describe('In local env', () => {
   })
 
   test('default logger should default to debug level', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.debug('debug works')
 
@@ -42,8 +36,6 @@ describe('In local env', () => {
   })
 
   test('default logger should still display info', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('info works')
 
@@ -52,8 +44,6 @@ describe('In local env', () => {
   })
 
   test('default logger displays logs with iso datetime format', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('iso date works')
 
@@ -61,13 +51,22 @@ describe('In local env', () => {
   })
 
   test('default logger displays logs in pretty printed format', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('pretty print works')
 
     expect(logged).not.toContain('{')
   })
+
+  // TODO - Figure out how to stub `require` to throw a fake MODULE_NOT_FOUND error
+  // test('default logger does not pretty print if pino-pretty is not installed', async () => {
+  //   proxyquire('../src/logger', {
+  //     'pino-pretty': null
+  //   })
+  //
+  //   const logger = DefaultLogger()
+  //   logger.info('pretty print disabled')
+  //   expect(logged).toContain('{')
+  // })
 })
 
 describe('In production env', () => {
@@ -76,8 +75,6 @@ describe('In production env', () => {
   })
 
   test('default logger should default to info level', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.debug('debug does not work')
 
@@ -86,8 +83,6 @@ describe('In production env', () => {
   })
 
   test('default logger displays logs in JSON format', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('json works')
 
@@ -99,8 +94,6 @@ describe('In production env', () => {
   })
 
   test('default logger should display info logs', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('info works')
 
@@ -110,8 +103,6 @@ describe('In production env', () => {
   })
 
   test('default logger displays logs with epoch datetime format', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('iso date works')
 
@@ -126,8 +117,6 @@ describe('In test env', () => {
   })
 
   test('default logger should default to silent level', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.debug('debug does not work')
 
@@ -136,8 +125,6 @@ describe('In test env', () => {
   })
 
   test('default logger should not display logs', () => {
-    process.stdout.write = captureStdoutLogs()
-
     const logger = DefaultLogger()
     logger.info('info works')
 

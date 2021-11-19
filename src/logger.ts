@@ -1,17 +1,10 @@
-import Pino, { LoggerOptions, Logger } from 'pino'
+import Pino from 'pino'
+import { getLevel, isInstalled } from './util'
+import deepmerge from 'deepmerge'
 
-export default function DefaultLogger (options?: LoggerOptions): Logger {
-  return Pino({
-    level: (() => {
-      switch (process.env.NODE_ENV) {
-        case 'production':
-          return 'info'
-        case 'test':
-          return 'silent'
-        default:
-          return 'debug'
-      }
-    })(),
+export default function DefaultLogger (options?: Pino.LoggerOptions): Pino.Logger {
+  const defaultOptions: Pino.LoggerOptions = {
+    level: getLevel(process.env.NODE_ENV),
     messageKey: 'message',
     formatters: {
       level: level => ({ level }) // display the level not the number value of the level
@@ -22,10 +15,12 @@ export default function DefaultLogger (options?: LoggerOptions): Logger {
       paths: ['req.headers.authorization', 'req.headers.assertion', 'req.headers["x-jwt-assertion"]', 'req.headers["x-jwt-assertion-original"]'],
       censor: '***'
     },
-    prettyPrint: process.env.NODE_ENV === 'production' ? false : {
-      // if in local environment use pretty print logs
-      translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' // show timestamp instead of epoch time
-    },
-    ...options
-  })
+    // if in local environment use pretty print logs
+    ...process.env.NODE_ENV !== 'production' && isInstalled('pino-pretty') && {
+      prettyPrint: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' } // show timestamp instead of epoch time
+    }
+  }
+
+  const opts: Pino.LoggerOptions = options == null ? defaultOptions : deepmerge(defaultOptions, options)
+  return Pino(opts)
 }
