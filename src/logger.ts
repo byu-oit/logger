@@ -17,7 +17,13 @@ export default function DefaultLogger (options?: Pino.LoggerOptions): Pino.Logge
     },
     // if in local environment use pretty print logs
     ...process.env.NODE_ENV !== 'production' && isInstalled('pino-pretty') && {
-      prettyPrint: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' } // show timestamp instead of epoch time
+      transport: {
+        target: 'pino-pretty',
+        options: {
+          translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'', // show timestamp instead of epoch time
+          messageKey: 'message'
+        }
+      }
     }
   }
 
