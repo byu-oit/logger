@@ -1,6 +1,6 @@
 {
   "name": "@byu-oit/logger",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "Default configuration for pino logger",
   "contributors": [
     "Scott Hutchings <scott_hutchings@byu.edu>"
