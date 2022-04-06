@@ -42,7 +42,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: ${{ matrix.node-version == env.node_version }} # just run coverage if node 16
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
