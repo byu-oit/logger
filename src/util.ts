@@ -30,5 +30,5 @@ export function isRecord (value: unknown): value is Record<string, unknown> {
 }
 
 export function hasProperty<T = unknown> (value: T, prop: string | number | symbol): prop is keyof T {
-  return prop in value
+  return Object.hasOwnProperty.call(value, prop)
 }
