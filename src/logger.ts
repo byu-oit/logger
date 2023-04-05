@@ -1,9 +1,9 @@
-import Pino from 'pino'
+import { Logger, LoggerOptions, pino } from 'pino'
 import { getLevel, isInstalled, isProduction } from './util'
 import deepmerge from 'deepmerge'
 
-export default function DefaultLogger (options?: Pino.LoggerOptions): Pino.Logger {
-  const defaultOptions: Pino.LoggerOptions = {
+export function ByuLogger (options?: LoggerOptions): Logger {
+  const defaultOptions: LoggerOptions = {
     level: getLevel(process.env.NODE_ENV),
     messageKey: 'message',
     formatters: {
@@ -26,6 +26,8 @@ export default function DefaultLogger (options?: Pino.LoggerOptions): Pino.Logge
       }
     }
   }
-  const opts: Pino.LoggerOptions = options == null ? defaultOptions : deepmerge(defaultOptions, options)
-  return Pino(opts)
+  const opts: LoggerOptions = options == null ? defaultOptions : deepmerge(defaultOptions, options)
+  return pino(opts)
 }
+
+export default ByuLogger

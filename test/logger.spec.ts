@@ -1,11 +1,11 @@
-import DefaultLogger from '../src/logger'
-import Pino from 'pino'
+import {ByuLogger} from '../src/logger'
+import {Logger} from 'pino'
 
 const jan1st = new Date(2021, 0, 1)
 const dateNowStub = jest.fn(() => jan1st.getTime())
 const realDateNow = Date.now.bind(global.Date)
 let logged: string = ''
-let logger: Pino.Logger
+let logger: Logger
 
 beforeAll(() => {
   process.stdout.write = (buffer: string) => {
@@ -28,7 +28,7 @@ afterEach(() => {
 // describe('In local env', () => {
 //   beforeEach(() => {
 //     process.env.NODE_ENV = 'local'
-//     logger = DefaultLogger()
+//     logger = ByuLogger()
 //   })
 //
 //   test('default logger should default to debug level', () => {
@@ -64,7 +64,7 @@ afterEach(() => {
 //   //     'pino-pretty': null
 //   //   })
 //   //
-//   //   const logger = DefaultLogger()
+//   //   const logger = ByuLogger()
 //   //   logger.info('pretty print disabled')
 //   //   expect(logged).toContain('{')
 //   // })
@@ -73,7 +73,7 @@ afterEach(() => {
 describe('In production env', () => {
   beforeEach(() => {
     process.env.NODE_ENV = 'production'
-    logger = DefaultLogger()
+    logger = ByuLogger()
   })
 
   test('default logger should default to info level', () => {
@@ -112,7 +112,7 @@ describe('In production env', () => {
 describe('In test env', () => {
   beforeEach(() => {
     process.env.NODE_ENV = 'test'
-    logger = DefaultLogger()
+    logger = ByuLogger()
   })
 
   test('default logger should default to silent level', () => {
