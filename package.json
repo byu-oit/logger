@@ -1,12 +1,13 @@
 {
   "name": "@byu-oit/logger",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Default configuration for pino logger",
   "contributors": [
     {
       "name": "Scott Hutching",
       "email": "scott_hutchings@byu.edu"
-    },{
+    },
+    {
       "name": "Spencer Tuft",
       "email": "stuft2@byu.edu"
     }
