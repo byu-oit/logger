@@ -1,5 +1,5 @@
-import {ByuLogger} from '../src/logger'
-import {Logger} from 'pino'
+import { ByuLogger } from '../src/logger'
+import { Logger } from 'pino'
 
 const jan1st = new Date(2021, 0, 1)
 const dateNowStub = jest.fn(() => jan1st.getTime())
