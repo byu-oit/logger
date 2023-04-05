@@ -1,9 +1,9 @@
-import Pino from 'pino'
-import { getLevel, isInstalled } from './util'
+import { Logger, LoggerOptions, pino } from 'pino'
+import { getLevel, isInstalled, isProduction } from './util'
 import deepmerge from 'deepmerge'
 
-export default function DefaultLogger (options?: Pino.LoggerOptions): Pino.Logger {
-  const defaultOptions: Pino.LoggerOptions = {
+export function ByuLogger (options?: LoggerOptions): Logger {
+  const defaultOptions: LoggerOptions = {
     level: getLevel(process.env.NODE_ENV),
     messageKey: 'message',
     formatters: {
@@ -15,12 +15,16 @@ export default function DefaultLogger (options?: Pino.LoggerOptions): Pino.Logge
       paths: ['req.headers.authorization', 'req.headers.assertion', 'req.headers["x-jwt-assertion"]', 'req.headers["x-jwt-assertion-original"]'],
       censor: '***'
     },
-    // if in local environment use pretty print logs
-    ...process.env.NODE_ENV !== 'production' && isInstalled('pino-pretty') && {
-      prettyPrint: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' } // show timestamp instead of epoch time
+    // if in local environment try to pretty print logs
+    ...!isProduction() && isInstalled('pino-pretty') && {
+      transport: {
+        target: 'pino-pretty',
+        options: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' }
+      }
     }
   }
-
-  const opts: Pino.LoggerOptions = options == null ? defaultOptions : deepmerge(defaultOptions, options)
-  return Pino(opts)
+  const opts: LoggerOptions = options == null ? defaultOptions : deepmerge(defaultOptions, options)
+  return pino(opts)
 }
+
+export default ByuLogger
