@@ -15,10 +15,7 @@ export function ByuLogger (options?: LoggerOptions): Logger {
       paths: ['req.headers.authorization', 'req.headers.assertion', 'req.headers["x-jwt-assertion"]', 'req.headers["x-jwt-assertion-original"]'],
       censor: '***'
     },
-    // if in local environment use pretty print logs
-    // ...process.env.NODE_ENV !== 'production' && isInstalled('pino-pretty') && {
-    //   prettyPrint: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' } // show timestamp instead of epoch time
-    // },
+    // if in local environment try to pretty print logs
     ...!isProduction() && isInstalled('pino-pretty') && {
       transport: {
         target: 'pino-pretty',
