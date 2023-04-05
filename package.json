@@ -30,7 +30,7 @@
   "dependencies": {
     "deepmerge": "^4.2.2",
     "pino": "^8.11.0",
-    "pino-http": "^6.6.0"
+    "pino-http": "^8.3.3"
   },
   "devDependencies": {
     "@tsconfig/node12": "^1.0.11",
