@@ -19,7 +19,7 @@ export function ByuLogger (options?: LoggerOptions): Logger {
     ...!isProduction() && isInstalled('pino-pretty') && {
       transport: {
         target: 'pino-pretty',
-        options: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' }
+        options: { translateTime: 'UTC:yyyy-mm-dd HH:MM:ss.l' }
       }
     }
   }
