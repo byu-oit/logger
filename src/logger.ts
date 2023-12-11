@@ -15,11 +15,13 @@ export function ByuLogger (options?: LoggerOptions): Logger {
       paths: ['req.headers.authorization', 'req.headers.assertion', 'req.headers["x-jwt-assertion"]', 'req.headers["x-jwt-assertion-original"]'],
       censor: '***'
     },
-    // if in local environment try to pretty print logs
-    ...!isProduction() && isInstalled('pino-pretty') && {
+    // if in local environment and not running tests try to pretty print logs
+    // jest and pretty-print don't get along (causes open handles and sometimes doesn't close),
+    // so we'll default to not include pretty-print if running tests
+    ...!isProduction() && process.env.NODE_ENV !== 'test' && isInstalled('pino-pretty') && {
       transport: {
         target: 'pino-pretty',
-        options: { translateTime: 'UTC:yyyy-mm-dd HH:MM:ss.l' }
+        options: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' }
       }
     }
   }
