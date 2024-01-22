@@ -1,10 +1,21 @@
 {
-  "extends": "@tsconfig/node12/tsconfig.json",
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "declarationDir": "dist/types",
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist/esm",
+    "lib": [
+      "DOM",
+      "ES2022"
+    ]
   },
   "include": [
-    "src/**/*"
+    "src"
   ]
 }
