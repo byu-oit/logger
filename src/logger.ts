@@ -2,7 +2,7 @@ import { Logger, LoggerOptions, pino } from 'pino'
 import { getLevel, isInstalled, isProduction } from './util.js'
 import deepmerge from 'deepmerge'
 
-export default function ByuLogger(options?: LoggerOptions): Logger {
+export default function ByuLogger (options?: LoggerOptions): Logger {
   const defaultOptions: LoggerOptions = {
     level: getLevel(process.env.NODE_ENV),
     messageKey: 'message',
