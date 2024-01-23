@@ -1,4 +1,4 @@
-import { ByuLogger } from '../src/logger'
+import ByuLogger from '../src/logger'
 import { Logger } from 'pino'
 
 const jan1st = new Date(2021, 0, 1)

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "es2022"
+    ],
+    "module": "commonjs",
+    "target": "es2022",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "declarationDir": "dist/cjs/types",
+    "declaration": true,
+    "outDir": "dist/cjs",
+  },
+  "include": [
+    "src"
+  ]
+}
