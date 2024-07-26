@@ -14,9 +14,9 @@ const test = ava as TestFn<Context>
 
 test.before((t) => {
   /* Stub the date time */
-    const jan1st = new Date(2021, 0, 1)
-    t.context.now = jan1st
-    t.context.clock = sinon.useFakeTimers(jan1st.getTime())
+  const jan1st = new Date(2021, 0, 1)
+  t.context.now = jan1st
+  t.context.clock = sinon.useFakeTimers(jan1st.getTime())
 })
 
 test.beforeEach((t) => {
