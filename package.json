@@ -1,6 +1,6 @@
 {
   "name": "@byu-oit/logger",
-  "version": "0.4.2",
+  "version": "1.0.0",
   "description": "Default configuration for pino logger",
   "engines": {
     "node": ">=18"
