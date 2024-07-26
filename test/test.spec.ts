@@ -3,7 +3,7 @@ import sinon, { SinonFakeTimers } from 'sinon'
 import { Logger } from 'pino'
 import { ByuLogger } from '../src/logger.js'
 
-type Context = {
+interface Context {
   logged: string
   logger: Logger
   clock: SinonFakeTimers
