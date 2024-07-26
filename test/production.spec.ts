@@ -3,7 +3,7 @@ import sinon, { SinonFakeTimers } from 'sinon'
 import { Logger } from 'pino'
 import { ByuLogger } from '../src/logger.js'
 
-type Context = {
+interface Context {
   logged: string
   logger: Logger
   clock: SinonFakeTimers
@@ -50,7 +50,7 @@ test.serial('default logger displays logs in JSON format', (t) => {
     t.truthy(parsedLog.time)
   } catch (e) {
     t.log(e)
-    t.fail(`The log format should be stringified JSON but parsing failed. See the logged error for details.`)
+    t.fail('The log format should be stringified JSON but parsing failed. See the logged error for details.')
   }
 })
 
@@ -63,7 +63,7 @@ test.serial('default logger should display info logs', (t) => {
     t.is(parsedLog.level, 'info')
   } catch (e) {
     t.log(e)
-    t.fail(`The log format should be stringified JSON but parsing failed. See the logged error for details.`)
+    t.fail('The log format should be stringified JSON but parsing failed. See the logged error for details.')
   }
 })
 
@@ -75,6 +75,6 @@ test.serial('default logger displays logs with epoch datetime format', (t) => {
     t.is(parsedLog.time, t.context.now.getTime())
   } catch (e) {
     t.log(e)
-    t.fail(`The log format should be stringified JSON but parsing failed. See the logged error for details.`)
+    t.fail('The log format should be stringified JSON but parsing failed. See the logged error for details.')
   }
 })
