@@ -1,10 +1,11 @@
 {
-  "extends": "@tsconfig/node12/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "outDir": "dist"
+    "declarationDir": "dist/esm",
+    "outDir": "dist/esm"
   },
   "include": [
-    "src/**/*"
+    "src"
   ]
 }

@@ -1,6 +1,6 @@
-import { Logger, LoggerOptions, pino } from 'pino'
-import { getLevel, isInstalled, isProduction } from './util'
 import deepmerge from 'deepmerge'
+import { Logger, LoggerOptions, pino } from 'pino'
+import { getLevel, isInstalled, isProduction } from './util.js'
 
 export function ByuLogger (options?: LoggerOptions): Logger {
   const defaultOptions: LoggerOptions = {
