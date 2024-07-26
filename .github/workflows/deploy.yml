@@ -40,6 +40,11 @@ jobs:
   test:
     name: Test Module
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_index: [0, 1]
+        total_nodes: [2]
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
 
@@ -52,8 +57,10 @@ jobs:
         run: npm install
 
       - name: npm test
-        run: |
-          npm run coverage
+        run: npm run coverage
+        env:
+          CI_NODE_INDEX: ${{ matrix.node_index }}
+          CI_NODE_TOTAL: ${{ matrix.total_nodes }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
