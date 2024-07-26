@@ -9,7 +9,7 @@ It will pretty-print logs when run locally, but it will write logs in JSON when 
 ## Install
 
 ```
-npm i @byu-oit/logger 
+npm i @byu-oit/logger
 ```
 
 ## Usage

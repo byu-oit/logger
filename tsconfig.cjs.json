@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "declarationDir": "dist/cjs",
+    "outDir": "dist/cjs"
+  },
+  "include": [
+    "src"
+  ]
+}
