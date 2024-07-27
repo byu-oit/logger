@@ -16,18 +16,18 @@
     }
   ],
   "type": "module",
-  "main": "./dist/cjs/index.js",
-  "types": "./dist/cjs/index.d.ts",
+  "main": "./dist/cjs/logger.js",
+  "types": "./dist/cjs/logger.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
+        "types": "./dist/esm/logger.d.ts",
+        "default": "./dist/esm/logger.js"
       },
       "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
+        "types": "./dist/cjs/logger.d.ts",
+        "default": "./dist/cjs/logger.js"
       }
     }
   },
