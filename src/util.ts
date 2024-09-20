@@ -1,4 +1,8 @@
+import { createRequire } from 'node:module'
 import Pino from 'pino'
+
+// @ts-ignore
+const nodeRequire = createRequire(import.meta.url)
 
 const ENV_LEVELS: Record<string, Pino.LevelWithSilent> = {
   production: 'info',
@@ -16,7 +20,7 @@ export function isProduction (): boolean {
 
 export function isInstalled (name: string): boolean {
   try {
-    return require(name) != null
+    return nodeRequire(name) !== null
   } catch (e) {
     if (isRecord(e) && hasProperty(e, 'code') && e.code === 'MODULE_NOT_FOUND') {
       return false
