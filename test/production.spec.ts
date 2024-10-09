@@ -1,82 +1,94 @@
-import ava, { TestFn } from 'ava'
-import sinon, { SinonFakeTimers } from 'sinon'
+import { describe, mock, test } from 'node:test'
+import * as assert from 'node:assert'
 import { Logger } from 'pino'
 import { ByuLogger } from '../src/logger.js'
 
 interface Context {
   logged: string
   logger: Logger
-  clock: SinonFakeTimers
   now: Date
 }
 
-const test = ava as TestFn<Context>
+const ctx: Context = {
+  logged: '',
+  logger: ByuLogger(),
+  now: new Date(1000)
+}
 
 test.before((t) => {
   /* Stub the date time */
-  const jan1st = new Date(2021, 0, 1)
-  t.context.now = jan1st
-  t.context.clock = sinon.useFakeTimers(jan1st.getTime())
+  mock.timers.enable({ apis: ['Date'] })
+  mock.timers.setTime(1000)
 })
 
 test.beforeEach((t) => {
   /* Capture the stdout pipe */
   process.stdout.write = (buffer: string) => {
-    t.context.logged += buffer
+    ctx.logged += buffer
     return true
   }
 
-  process.env.NODE_ENV = 'production'
-  t.context.logged = ''
-  t.context.logger = ByuLogger()
+  process.env.NODE_ENV = 'test'
+  ctx.logged = ''
+  ctx.logger = ByuLogger()
+  ctx.now = new Date(1000)
 })
 
 test.after((t) => {
-  t.context.clock.restore()
+  mock.timers.reset()
 })
 
-test.serial('default logger should default to info level', (t) => {
-  t.context.logger.debug('debug does not work')
-
-  t.is(t.context.logger.level, 'info')
-  t.is(t.context.logged, '') // no logs should have happened
+void describe('Default logger level is info', () => {
+  void test('default logger should default to info level', (context) => {
+    try {
+      ctx.logger.debug('debug does not work')
+      assert.equal(ctx.logger.level, 'info')
+      assert.equal(ctx.logged, '') // no logs should have happened
+    } catch (e) {
+      console.log(e)
+      assert.fail('Logger level not info')
+    }
+  })
 })
 
-test.serial('default logger displays logs in JSON format', (t) => {
-  t.context.logger.info('json works')
-
-  try {
-    const parsedLog = JSON.parse(t.context.logged)
-    t.truthy(parsedLog.message)
-    t.truthy(parsedLog.level)
-    t.truthy(parsedLog.time)
-  } catch (e) {
-    t.log(e)
-    t.fail('The log format should be stringified JSON but parsing failed. See the logged error for details.')
-  }
+void describe('Default logger in JSON', () => {
+  void test('default logger displays logs in JSON format', (context) => {
+    ctx.logger.info('json works')
+    try {
+      const parsedLog = JSON.parse(ctx.logged)
+      assert.ok(parsedLog.message)
+      assert.ok(parsedLog.level)
+      assert.ok(parsedLog.time)
+    } catch (e) {
+      console.log(e)
+      assert.fail('No json output')
+    }
+  })
 })
 
-test.serial('default logger should display info logs', (t) => {
-  t.context.logger.info('info works')
-
-  try {
-    const parsedLog = JSON.parse(t.context.logged)
-    t.is(parsedLog.message, 'info works')
-    t.is(parsedLog.level, 'info')
-  } catch (e) {
-    t.log(e)
-    t.fail('The log format should be stringified JSON but parsing failed. See the logged error for details.')
-  }
+void describe('Default logger contains "info"', () => {
+  void test('default logger should display info logs', (context) => {
+    ctx.logger.info('info works')
+    try {
+      const parsedLog = JSON.parse(ctx.logged)
+      assert.equal(parsedLog.message, 'info works')
+      assert.equal(parsedLog.level, 'info')
+    } catch (e) {
+      console.log(e)
+      assert.fail('Incorrect logger level')
+    }
+  })
 })
 
-test.serial('default logger displays logs with epoch datetime format', (t) => {
-  t.context.logger.info('iso date works')
-
-  try {
-    const parsedLog = JSON.parse(t.context.logged)
-    t.is(parsedLog.time, t.context.now.getTime())
-  } catch (e) {
-    t.log(e)
-    t.fail('The log format should be stringified JSON but parsing failed. See the logged error for details.')
-  }
+void describe('Display correct date format', () => {
+  void test('default logger displays logs with epoch datetime format', (context) => {
+    ctx.logger.info('iso date works')
+    try {
+      const parsedLog = JSON.parse(ctx.logged)
+      assert.equal(parsedLog.time, Date.now())
+    } catch (e) {
+      console.log(e)
+      assert.fail('Incorrect date format logged')
+    }
+  })
 })

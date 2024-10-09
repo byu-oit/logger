@@ -1,9 +1,9 @@
 {
   "name": "@byu-oit/logger",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Default configuration for pino logger",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "contributors": [
     {
@@ -35,14 +35,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf dist && concurrently \"npm:build:*\" -c cyanBright",
+    "build": "npm run clean && concurrently \"npm:build:*\" -c cyanBright",
     "build:cjs": "tsc -p tsconfig.cjs.json && echo-cli \"{\\\"type\\\": \\\"commonjs\\\"}\" > dist/cjs/package.json",
     "build:esm": "tsc -p tsconfig.json && echo-cli \"{\\\"type\\\": \\\"module\\\"}\" > dist/esm/package.json",
     "clean": "rimraf dist",
-    "coverage": "c8 ava",
+    "coverage": "c8 npm run test",
     "lint": "npx ts-standard | snazzy",
     "lint:fix": "npx ts-standard --fix | snazzy",
-    "test": "ava",
+    "test": "node --import tsimp --test test/*.spec.ts",
     "prepublishOnly": "npm run build"
   },
   "author": "Brigham Young University - Office of Information Technology",
@@ -60,32 +60,20 @@
     "pino-http": "^10.2.0"
   },
   "devDependencies": {
-    "@tsconfig/node18": "^18.2.4",
-    "@types/node": "^18.19.42",
-    "@types/sinon": "^17.0.3",
-    "ava": "^6.1.3",
+    "@tsconfig/node-lts": "^20.1.3",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^22.7.5",
     "c8": "^10.1.2",
     "concurrently": "^8.2.2",
     "echo-cli": "^2.0.0",
     "pino-pretty": "^11.2.2",
     "rimraf": "^6.0.1",
-    "sinon": "^18.0.0",
     "snazzy": "^9.0.0",
+    "ts-standard": "^12.0.2",
     "tsimp": "^2.0.11",
     "typescript": "^5.5.4"
   },
   "optionalDependencies": {
     "pino-pretty": ">=7"
-  },
-  "lint-staged": {
-    "*.ts": "npm run lint:fix"
-  },
-  "ava": {
-    "extensions": {
-      "ts": "module"
-    },
-    "nodeArguments": [
-      "--import=tsimp"
-    ]
   }
 }
