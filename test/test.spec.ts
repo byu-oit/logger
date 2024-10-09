@@ -1,49 +1,46 @@
-import ava, { TestFn } from 'ava'
-import sinon, { SinonFakeTimers } from 'sinon'
+import { test, mock } from 'node:test'
+import assert from 'node:assert'
 import { Logger } from 'pino'
 import { ByuLogger } from '../src/logger.js'
 
 interface Context {
   logged: string
   logger: Logger
-  clock: SinonFakeTimers
-  now: Date
 }
 
-const test = ava as TestFn<Context>
+const context: Context = {
+  logged: '',
+  logger: ByuLogger()
+}
 
 test.before((t) => {
   /* Stub the date time */
-  const jan1st = new Date(2021, 0, 1)
-  t.context.now = jan1st
-  t.context.clock = sinon.useFakeTimers(jan1st.getTime())
+  mock.timers.enable({ apis: ['Date'] })
+  mock.timers.setTime(1000)
 })
 
 test.beforeEach((t) => {
   /* Capture the stdout pipe */
   process.stdout.write = (buffer: string) => {
-    t.context.logged += buffer
+    context.logged += buffer
     return true
   }
-
   process.env.NODE_ENV = 'test'
-  t.context.logged = ''
-  t.context.logger = ByuLogger()
+  context.logged = ''
+  context.logger = ByuLogger()
 })
 
 test.after((t) => {
-  t.context.clock.restore()
+  mock.timers.reset()
 })
 
-test.serial('default logger should default to silent level', (t) => {
-  t.context.logger.debug('debug does not work')
-
-  t.is(t.context.logger.level, 'silent')
-  t.is(t.context.logged, '') // no logs should have happened
+void test('default logger should default to silent level', (t) => {
+  context.logger.debug('debug does not work')
+  assert.equal(context.logger.level, 'silent')
+  assert.equal(context.logged, '') // no logs should have happened
 })
 
-test.serial('default logger should not display logs', (t) => {
-  t.context.logger.info('info works')
-
-  t.is(t.context.logged, '')
+void test('default logger should not display logs', (t) => {
+  context.logger.info('info works')
+  assert.equal(context.logged, '')
 })

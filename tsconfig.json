@@ -1,6 +1,12 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
+    "lib": ["es2023"],
+    "module": "node16",
+    "target": "es2022",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node16",
     "declaration": true,
     "declarationDir": "dist/esm",
     "outDir": "dist/esm"

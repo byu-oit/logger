@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge'
 import { Logger, LoggerOptions, pino } from 'pino'
-import { getLevel, isInstalled, isProduction } from './util.js'
+import { getLevel, isProduction } from './util.js'
 
 export function ByuLogger (options?: LoggerOptions): Logger {
   const defaultOptions: LoggerOptions = {
@@ -18,10 +18,10 @@ export function ByuLogger (options?: LoggerOptions): Logger {
     // if in local environment and not running tests try to pretty print logs
     // jest and pretty-print don't get along (causes open handles and sometimes doesn't close),
     // so we'll default to not include pretty-print if running tests
-    ...!isProduction() && process.env.NODE_ENV !== 'test' && isInstalled('pino-pretty') && {
+    ...!isProduction() && process.env.NODE_ENV !== 'test' && {
       transport: {
         target: 'pino-pretty',
-        options: { translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' }
+        options: { sync: true, translateTime: 'UTC:yyyy-mm-dd\'T\'HH:MM:ss.l\'Z\'' }
       }
     }
   }
